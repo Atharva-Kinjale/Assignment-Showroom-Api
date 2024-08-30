@@ -1,10 +1,13 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = require("../../utils/connection");
+const Location = require("./location");
+const Car_Services = require("./car_Services");
+const Employee_Services = require("./employee_Services");
 
 const Services = sequelize.define(
-  "Services",
+  "service",
   {
-    services_Id: {
+    service_Id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -29,6 +32,10 @@ const Services = sequelize.define(
     location: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: "Location",
+        key: "pincode",
+      },
     },
   },
   {
@@ -36,4 +43,8 @@ const Services = sequelize.define(
   }
 );
 
+// ASSOCIATION
+// Services.belongsTo(Location, { foreignKey: "location" });
+// Services.hasMany(Car_Services, { foreignKey: "service_Id" });
+// Services.hasMany(Employee_Services, { foreignKey: "service_Id" });
 module.exports = Services;

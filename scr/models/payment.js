@@ -1,6 +1,7 @@
-const { sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes } = require("sequelize");
 
 const sequelize = require("../../utils/connection");
+const OrderDetails = require("./orderDetailModel");
 
 const Payment = sequelize.define(
   "payment",
@@ -14,6 +15,10 @@ const Payment = sequelize.define(
       type: DataTypes.INTEGER,
       unique: true,
       allowNull: false,
+      references: {
+        model: "orderDetails",
+        key: "order_Id",
+      },
     },
     paymentType: {
       type: DataTypes.ENUM("cash", "online", "check", "loan"),
@@ -28,5 +33,5 @@ const Payment = sequelize.define(
     paranoid: true,
   }
 );
-
+// Payment.belongsTo(OrderDetails, { foreignKey: "payment_Id" });
 module.exports = Payment;

@@ -7,6 +7,7 @@ const sequelize = require("./utils/connection");
 const User = require("./scr/models/user");
 
 sequelize.sync({ alter: true });
+
 // .then(() => {
 //   const userInfo = User.build({
 //     F_Name: "ATHARVA",
