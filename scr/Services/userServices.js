@@ -1,4 +1,7 @@
-const User = require("../models/user");
+// const User = require("../models/user");
+const { DataTypes } = require("sequelize");
+const sequelize = require("../../models/index").sequelize;
+const User = require("../../models/user")(sequelize, DataTypes);
 
 exports.getAll = () => {
   try {

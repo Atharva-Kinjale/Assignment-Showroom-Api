@@ -2,12 +2,21 @@ const dotenv = require("dotenv");
 const app = require("./app");
 dotenv.config();
 
-// datbase connection and syncing
+// datbase connection and syncing with connection.js in utils
 const sequelize = require("./utils/connection");
-const User = require("./scr/models/user");
+sequelize.sync({ force: false });
 
-sequelize.sync({ alter: true });
+// ---------------------------
 
+// // for syncing and connection with index .js created with migration ie sequqlize cli
+
+// const db = require("./models/index");
+// // console.log(db.sequelize);
+
+// // db.sequelize.sync({ alter: true });
+// db.sequelize.sync({ force: false });
+// ----------------------------------------------------------
+// to enter data during suncing
 // .then(() => {
 //   const userInfo = User.build({
 //     F_Name: "ATHARVA",
@@ -18,6 +27,8 @@ sequelize.sync({ alter: true });
 // });
 // --------------------------------------
 const PORT = process.env.PORT || 3000;
+// const PORT = 3000;
+
 console.log(PORT);
 // console.log(process.cwd());
 app.listen(PORT, () => {
