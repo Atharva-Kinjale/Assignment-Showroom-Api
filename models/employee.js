@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
           key: "user_Id",
         },
       },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,

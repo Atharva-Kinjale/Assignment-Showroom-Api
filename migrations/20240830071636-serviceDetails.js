@@ -47,6 +47,15 @@ module.exports = {
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        defaultValue: null,
+      },
+      createdBy: {
+        type: Sequelize.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: Sequelize.STRING,
+        defaultValue: null,
       },
     });
   },

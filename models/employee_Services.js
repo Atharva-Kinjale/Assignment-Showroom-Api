@@ -24,6 +24,14 @@ module.exports = (sequelize, DataTypes) => {
           key: "service_id",
         },
       },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,

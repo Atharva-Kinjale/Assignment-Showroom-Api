@@ -21,11 +21,20 @@ module.exports = (sequelize, DataTypes) => {
         //   key: "pincode",
         // },
       },
-      createdAt: { type: DataTypes.DATE, default: DataTypes.NOW },
-      updatedAt: DataTypes.DATE,
-      createdBy: DataTypes.STRING,
-      updatedBy: { type: DataTypes.STRING, defaultValue: null },
-      deletedBy: { type: DataTypes.STRING, defaultValue: null },
+      createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+      },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,

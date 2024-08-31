@@ -7,6 +7,14 @@ module.exports = (sequelize, DataTypes) => {
       city: { type: DataTypes.STRING, allowNull: false },
       State: { type: DataTypes.STRING, allowNull: false },
       Country: { type: DataTypes.STRING, allowNull: false },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,

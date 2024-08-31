@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
           key: "pincode",
         },
       },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,

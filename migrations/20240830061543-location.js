@@ -28,6 +28,15 @@ module.exports = {
       },
       deletedAt: {
         type: Sequelize.DATE,
+        defaultValue: null,
+      },
+      createdBy: {
+        type: Sequelize.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: Sequelize.STRING,
+        defaultValue: null,
       },
     });
   },

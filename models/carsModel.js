@@ -36,6 +36,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
     {
       paranoid: true,
@@ -56,11 +64,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-    Car.hasMany(models.Customer_car, {
-      foreignkey: "car_Id",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
+    // Car.hasMany(models.Customer_car, {
+    //   foreignkey: "car_Id",
+    //   onDelete: "CASCADE",
+    //   onUpdate: "CASCADE",
+    // });
     Car.hasMany(models.Car_services, {
       foreignKey: "car_id",
       onDelete: "CASCADE",

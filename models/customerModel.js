@@ -17,6 +17,14 @@ module.exports = (sequelize, DataTypes) => {
         //   key: "user_Id",
         // },
       },
+      createdBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
+      updatedBy: {
+        type: DataTypes.STRING,
+        defaultValue: null,
+      },
     },
 
     {
@@ -37,11 +45,11 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
-    Customer.hasMany(models.Customer_car, {
-      foreignKey: "customer_Id",
-      onDelete: "CASCADE",
-      onUpdate: "CASCADE",
-    });
+    // Customer.hasMany(models.Customer_car, {
+    //   foreignKey: "customer_Id",
+    //   onDelete: "CASCADE",
+    //   onUpdate: "CASCADE",
+    // });
   };
 
   return Customer;
