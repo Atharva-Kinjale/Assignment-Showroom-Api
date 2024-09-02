@@ -9,6 +9,8 @@ exports.getAllLocations = async (req, res) => {
       .status(STATUSCODES.OK)
       .json({ status: "success", data: { locations: locations } });
   } catch (err) {
+
+    // amitesh : we should throw the error.
     res
       .status(STATUSCODES.NOT_FOUND)
       .json({ status: " Failure", message: err.message });
@@ -25,6 +27,7 @@ exports.createlocation = async (req, res, next) => {
       .status(STATUSCODES.CREATED)
       .json({ status: "success", data: { locations: location } });
   } catch (err) {
+     // amitesh : we should throw the error.
     res
       // .status(STATUSCODES.NOT_FOUND)
       .json({ status: " Failure", message: err.message });
@@ -44,6 +47,7 @@ exports.getlocationbyId = async (req, res) => {
       .status(STATUSCODES.OK)
       .json({ status: "success", data: { locations: locations } });
   } catch (err) {
+     // amitesh : we should throw the error.
     res
       .status(STATUSCODES.NOT_FOUND)
       .json({ status: " Failure", message: err.message });
@@ -67,6 +71,7 @@ exports.updateLocation = async (req, res) => {
       .status(STATUSCODES.OK)
       .json({ status: "Success", data: { locations: updatedloc } });
   } catch (err) {
+     // amitesh : we should throw the error.
     res
       .status(STATUSCODES.NOT_FOUND)
       .json({ status: " Failure", message: err.message });
@@ -81,6 +86,7 @@ exports.deletedlocation = async (req, res) => {
     res.status(STATUSCODES.NO_CONTENT).json({ status: "Success", data: null });
     // res.send("ghjkh");
   } catch (err) {
+     // amitesh : we should throw the error.
     res
       .status(STATUSCODES.INTERNAL_SERVER_ERROR)
       .json({ status: " Failure", message: err.message });
