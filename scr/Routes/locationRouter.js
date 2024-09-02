@@ -5,6 +5,8 @@ const locationController = require("../controller/locattionController");
 router
   .route("/")
   .get(locationController.getAllLocations)
+
+  //Amitesh Comment:   createlocation  it should be createlLocation same for deletedlocation
   .post(locationController.createlocation);
 
 router
