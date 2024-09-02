@@ -7,12 +7,12 @@ router
   .get(locationController.getAllLocations)
 
   //Amitesh Comment:   createlocation  it should be createlLocation same for deletedlocation
-  .post(locationController.createlocation);
+  .post(locationController.createLocation);
 
 router
   .route("/:id")
-  .get(locationController.getlocationbyId)
+  .get(locationController.getLocationById)
   .patch(locationController.updateLocation)
-  .delete(locationController.deletedlocation);
+  .delete(locationController.deletedLocation);
 
 module.exports = router;

@@ -31,11 +31,11 @@ module.exports = {
         defaultValue: null,
       },
       createdBy: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         defaultValue: null,
       },
       updatedBy: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         defaultValue: null,
       },
     });

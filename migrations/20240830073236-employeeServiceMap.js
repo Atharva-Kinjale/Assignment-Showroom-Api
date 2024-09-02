@@ -2,11 +2,21 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("car_services", {
-      car_services_Id: {
+    await queryInterface.createTable("employee_services", {
+      employee_services_Id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+      },
+      employee_Id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "employees",
+          key: "employee_Id",
+        },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       service_Id: {
         type: Sequelize.INTEGER,
@@ -17,20 +27,6 @@ module.exports = {
         },
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
-      },
-      car_Id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: "cars",
-          key: "car_Id",
-        },
-        onDelete: "CASCADE",
-        onUpdate: "CASCADE",
-      },
-      isInService: {
-        type: Sequelize.TINYINT(1),
-        defaultValue: 0,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -47,11 +43,11 @@ module.exports = {
         defaultValue: null,
       },
       createdBy: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         defaultValue: null,
       },
       updatedBy: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         defaultValue: null,
       },
     });
@@ -59,6 +55,6 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
     // Drop the table
-    await queryInterface.dropTable("car_services");
+    await queryInterface.dropTable("employee_services");
   },
 };

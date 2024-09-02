@@ -30,7 +30,7 @@ exports.createUser = async (req, res, next) => {
   next();
 };
 // get user by id
-exports.getUserbyId = async (req, res) => {
+exports.getUserById = async (req, res) => {
   try {
     const id = req.params.id;
     // const user = await User.findOne({ where: { user_Id: id } });
