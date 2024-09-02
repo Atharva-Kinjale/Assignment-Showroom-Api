@@ -1,11 +1,15 @@
 // const User = require("../models/user");
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../models/index").sequelize;
-const User = require("../../models/user")(sequelize, DataTypes);
+// const User = require("../../models/user")(sequelize, DataTypes);
+// const Location = require("../../models/location")(sequelize, DataTypes);
+const { User, Location } = require("../../models");
 
-exports.getAll = () => {
+exports.getAll = async () => {
   try {
-    const usersData = User.findAll();
+    const usersData = await User.findAll({
+      include: { model: Location, as: "location" },
+    });
     return usersData;
   } catch (err) {
     console.log(err);
@@ -25,7 +29,10 @@ exports.createUser = (data) => {
 
 const getUserbyId = (id) => {
   try {
-    const user = User.findOne({ where: { user_Id: id } });
+    const user = User.findOne({
+      where: { user_Id: id },
+      include: { model: Location, as: "location" },
+    });
     return user;
   } catch (err) {
     console.log(err);

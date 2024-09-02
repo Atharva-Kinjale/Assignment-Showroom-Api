@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "Atharva@123",
-    "database": "showroom3",
+    "database": "OgShowroom",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

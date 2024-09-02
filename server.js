@@ -2,9 +2,9 @@ const dotenv = require("dotenv");
 const app = require("./app");
 dotenv.config();
 
-// datbase connection and syncing with connection.js in utils
-const sequelize = require("./utils/connection");
-sequelize.sync({ force: false });
+// // datbase connection and syncing with connection.js in utils
+// const sequelize = require("./utils/connection");
+// sequelize.sync({ force: false });
 
 // ---------------------------
 

@@ -11,26 +11,48 @@ module.exports = (sequelize, DataTypes) => {
       employee_Id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "employees",
-          key: "employee_id",
+        // references: {
+        //   model: "employees",
+        //   key: "employee_id",
+        // },
+        validate: {
+          notNull: { msg: "Employee ID is required" },
+          isInt: { msg: "Employee ID must be a valid integer" },
         },
       },
       service_Id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "services",
-          key: "service_id",
+        // references: {
+        //   model: "services",
+        //   key: "service_id",
+        // },
+        validate: {
+          notNull: { msg: "Service ID is required" },
+          isInt: { msg: "Service ID must be a valid integer" },
         },
       },
       createdBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "CreatedBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "CreatedBy should be between 3 to 50 characters",
+          },
+        },
       },
       updatedBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "UpdatedBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "UpdatedBy should be between 3 to 50 characters",
+          },
+        },
       },
     },
     {

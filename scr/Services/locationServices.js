@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-
+const errCodes = require("./errorMessages");
 const sequelize = require("../../models/index").sequelize;
-const Location = require("../../models/location")(sequelize, DataTypes);
-
+// const Location = require("../../models/location")(sequelize, DataTypes);
+const { User, Location } = require("../../models");
 exports.getAll = () => {
   try {
     const locData = Location.findAll();

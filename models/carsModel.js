@@ -11,25 +11,51 @@ module.exports = (sequelize, DataTypes) => {
       model: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true,
+        unique: {
+          msg: "This car model is already in use",
+        },
+        validate: {
+          notNull: { msg: "Car model is required" },
+          notEmpty: { msg: "Car model cannot be empty" },
+        },
       },
       price: {
         type: DataTypes.DECIMAL,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Price is required" },
+          isDecimal: { msg: "Price should be a valid decimal number" },
+          min: { args: [0], msg: "Price must be a positive value" },
+        },
       },
       manufactureYear: {
         type: DataTypes.DATE,
+        validate: {
+          isDate: { msg: "Manufacture Year must be a valid date" },
+          isBefore: {
+            args: [new Date().toISOString().slice(0, 10)],
+            msg: "Manufacture Year cannot be in the future",
+          },
+        },
       },
       mileage: {
         type: DataTypes.DECIMAL,
         defaultValue: null,
+        validate: {
+          isDecimal: { msg: "Mileage should be a valid decimal number" },
+          min: { args: [0], msg: "Mileage must be a positive value" },
+        },
       },
       location: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "locations", // table name
-          key: "pincode",
+        // references: {
+        //   model: "locations", // table name
+        //   key: "pincode",
+        // },
+        validate: {
+          notNull: { msg: "Location is required" },
+          isInt: { msg: "Location must be a valid pincode" },
         },
       },
       isAvailable: {
@@ -39,10 +65,24 @@ module.exports = (sequelize, DataTypes) => {
       createdBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "createdBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "createdBy should be between 3 to 50 characters",
+          },
+        },
       },
       updatedBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "updatedBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "updatedBy should be between 3 to 50 characters",
+          },
+        },
       },
     },
     {
@@ -70,7 +110,7 @@ module.exports = (sequelize, DataTypes) => {
     //   onUpdate: "CASCADE",
     // });
     Car.hasMany(models.Car_services, {
-      foreignKey: "car_id",
+      foreignKey: "car_Id",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

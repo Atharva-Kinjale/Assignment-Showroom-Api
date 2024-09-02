@@ -1,12 +1,17 @@
 const locationServices = require("../Services/locationServices");
+const STATUSCODES = require("../Services/StatusCodes");
 // find all locations
 exports.getAllLocations = async (req, res) => {
   try {
     // const users = await User.findAll();
     const locations = await locationServices.getAll();
-    res.send(locations);
+    res
+      .status(STATUSCODES.OK)
+      .json({ status: "success", data: { locations: locations } });
   } catch (err) {
-    res.status(404).json({ staus: " Failure", message: err });
+    res
+      .status(STATUSCODES.NOT_FOUND)
+      .json({ status: " Failure", message: err.message });
   }
 };
 
@@ -16,9 +21,13 @@ exports.createlocation = async (req, res, next) => {
     const location = await locationServices.createLoc(req.body);
     console.log(location);
 
-    res.status(200).send(location);
+    res
+      .status(STATUSCODES.CREATED)
+      .json({ status: "success", data: { locations: location } });
   } catch (err) {
-    res.status(404).json({ staus: " Failure", message: err });
+    res
+      // .status(STATUSCODES.NOT_FOUND)
+      .json({ status: " Failure", message: err.message });
   }
   next();
 };
@@ -31,9 +40,13 @@ exports.getlocationbyId = async (req, res) => {
     const loc = await locationServices.getbyId(id);
     // console.log(user.dataValues);
 
-    res.status(200).json({ status: "success", data: { locations: loc } });
+    res
+      .status(STATUSCODES.OK)
+      .json({ status: "success", data: { locations: locations } });
   } catch (err) {
-    console.log(err);
+    res
+      .status(STATUSCODES.NOT_FOUND)
+      .json({ status: " Failure", message: err.message });
   }
 };
 // update locations
@@ -51,10 +64,12 @@ exports.updateLocation = async (req, res) => {
     );
     console.log(updatedloc);
     res
-      .status(200)
+      .status(STATUSCODES.OK)
       .json({ status: "Success", data: { locations: updatedloc } });
   } catch (err) {
-    console.log(err);
+    res
+      .status(STATUSCODES.NOT_FOUND)
+      .json({ status: " Failure", message: err.message });
   }
 };
 
@@ -63,9 +78,11 @@ exports.deletedlocation = async (req, res) => {
   try {
     await locationServices.deleteLocData(req.params.id);
     // console.log(updatedUser);
-    res.status(200).json({ statusss: "Success", data: null });
+    res.status(STATUSCODES.NO_CONTENT).json({ status: "Success", data: null });
     // res.send("ghjkh");
   } catch (err) {
-    console.log(err);
+    res
+      .status(STATUSCODES.INTERNAL_SERVER_ERROR)
+      .json({ status: " Failure", message: err.message });
   }
 };

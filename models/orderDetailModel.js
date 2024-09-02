@@ -11,51 +11,93 @@ module.exports = (sequelize, DataTypes) => {
       employee_Id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "employees",
-          key: "employee_Id",
+        // references: {
+        //   model: "employees",
+        //   key: "employee_Id",
+        // },
+        validate: {
+          notNull: { msg: "Employee ID is required" },
+          isInt: { msg: "Employee ID must be a valid integer" },
         },
       },
       customer_Id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "customers",
-          key: "customer_Id",
+        // references: {
+        //   model: "customers",
+        //   key: "customer_Id",
+        // },
+        validate: {
+          notNull: { msg: "Customer ID is required" },
+          isInt: { msg: "Customer ID must be a valid integer" },
         },
       },
       car_Id: {
         type: DataTypes.INTEGER,
         unique: true,
         allowNull: false,
-        references: {
-          model: "cars",
-          key: "car_Id",
+        // references: {
+        //   model: "cars",
+        //   key: "car_Id",
+        // },
+        validate: {
+          notNull: { msg: "Car ID is required" },
+          isInt: { msg: "Car ID must be a valid integer" },
         },
       },
       amount: {
         type: DataTypes.DECIMAL,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Amount is required" },
+          isDecimal: { msg: "Amount must be a valid decimal" },
+          min: {
+            args: [0],
+            msg: "Amount must be a positive number",
+          },
+        },
       },
       orderDate: {
         type: DataTypes.DATE,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Order date is required" },
+          isDate: { msg: "Order date must be a valid date" },
+        },
       },
       location: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "location",
-          key: "pincode",
+        // references: {
+        //   model: "location",
+        //   key: "pincode",
+        // },
+        validate: {
+          notNull: { msg: "Location is required" },
+          isInt: { msg: "Location must be a valid integer" },
         },
       },
       createdBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "createdBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "createdBy should be between 3 to 50 characters",
+          },
+        },
       },
       updatedBy: {
         type: DataTypes.STRING,
         defaultValue: null,
+        validate: {
+          isAlpha: { msg: "updatedBy should only contain letters" },
+          len: {
+            args: [3, 50],
+            msg: "updatedBy should be between 3 to 50 characters",
+          },
+        },
       },
     },
     {
@@ -77,12 +119,12 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate: "CASCADE",
     });
     OrderDetails.belongsTo(models.Customer, {
-      foreignKey: "customer_id",
+      foreignKey: "customer_Id",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
     OrderDetails.belongsTo(models.Car, {
-      foreignKey: "car_id",
+      foreignKey: "car_Id",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
