@@ -27,7 +27,13 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: { msg: "Time required is mandatory" },
-          isDate: { msg: "Time required must be a valid time" },
+          // isTime: { msg: "Time required must be a valid time" },
+          isValidTime(value) {
+            const timePattern = /^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/; // HH:MM:SS format
+            if (!timePattern.test(value)) {
+              throw new Error("Time must be in the format HH:MM:SS");
+            }
+          },
         },
       },
       description: {
@@ -61,25 +67,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       createdBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "CreatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "CreatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "createdBy must be an integer" },
         },
       },
       updatedBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "UpdatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "UpdatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "updatedBy must be an integer" },
         },
       },
     },
@@ -92,6 +90,7 @@ module.exports = (sequelize, DataTypes) => {
   Services.associate = function (models) {
     Services.belongsTo(models.Location, {
       foreignKey: "location",
+      as: "loc",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

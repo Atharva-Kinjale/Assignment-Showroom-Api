@@ -63,25 +63,17 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: false,
       },
       createdBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "createdBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "createdBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "createdBy must be an integer" },
         },
       },
       updatedBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "updatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "updatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "updatedBy must be an integer" },
         },
       },
     },
@@ -96,11 +88,18 @@ module.exports = (sequelize, DataTypes) => {
     Car.belongsTo(models.Location, {
       //modelNmae
       foreignKey: "location",
+      as: "loc",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
+    // Car.hasMany(models.OrderDetails, {
+    //   foreignKey: "car_Id",
+    //   onDelete: "CASCADE",
+    //   onUpdate: "CASCADE",
+    // });
+    //old
     Car.hasMany(models.OrderDetails, {
-      foreignkey: "car_Id",
+      foreignKey: "car_Id",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

@@ -33,25 +33,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       createdBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "CreatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "CreatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "createdBy must be an integer" },
         },
       },
       updatedBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "UpdatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "UpdatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "updatedBy must be an integer" },
         },
       },
     },
@@ -65,11 +57,13 @@ module.exports = (sequelize, DataTypes) => {
   Employee_Services.associate = function (models) {
     Employee_Services.belongsTo(models.Service, {
       foreignKey: "service_Id",
+      as: "services",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
     Employee_Services.belongsTo(models.Employee, {
       foreignKey: "employee_Id",
+      as: "employees",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });

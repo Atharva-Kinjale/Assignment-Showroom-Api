@@ -4,7 +4,8 @@
   "description": "set up for training",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon run server.js"
+    "start": "nodemon run server.js",
+    "debug":"ndb server.js"
   },
   "author": "Atharva",
   "license": "ISC",

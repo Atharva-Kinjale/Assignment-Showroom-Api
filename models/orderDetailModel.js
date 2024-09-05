@@ -78,25 +78,17 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       createdBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "createdBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "createdBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "createdBy must be an integer" },
         },
       },
       updatedBy: {
-        type: DataTypes.STRING,
-        defaultValue: null,
+        type: DataTypes.INTEGER,
+
         validate: {
-          isAlpha: { msg: "updatedBy should only contain letters" },
-          len: {
-            args: [3, 50],
-            msg: "updatedBy should be between 3 to 50 characters",
-          },
+          isInt: { msg: "updatedBy must be an integer" },
         },
       },
     },
@@ -110,24 +102,34 @@ module.exports = (sequelize, DataTypes) => {
   OrderDetails.associate = function (models) {
     OrderDetails.belongsTo(models.Location, {
       foreignKey: "location",
+      as: "loc",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
     OrderDetails.belongsTo(models.Employee, {
       foreignKey: "employee_Id",
+      as: "emp",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
     OrderDetails.belongsTo(models.Customer, {
       foreignKey: "customer_Id",
+      as: "cust",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
     OrderDetails.belongsTo(models.Car, {
       foreignKey: "car_Id",
+      as: "car",
       onDelete: "CASCADE",
       onUpdate: "CASCADE",
     });
+    //new
+    // OrderDetails.belongsTo(models.Car, {
+    //   foreignKey: "car_Id",
+    //   onDelete: "CASCADE",
+    //   onUpdate: "CASCADE",
+    // });
     OrderDetails.hasOne(models.Payment, {
       foreignKey: "payment_Id",
       onDelete: "CASCADE",

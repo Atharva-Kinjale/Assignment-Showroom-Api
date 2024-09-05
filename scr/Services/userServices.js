@@ -4,15 +4,23 @@ const sequelize = require("../../models/index").sequelize;
 // const User = require("../../models/user")(sequelize, DataTypes);
 // const Location = require("../../models/location")(sequelize, DataTypes);
 const { User, Location } = require("../../models");
+const APIFeatures = require("../../utils/ApiFeatures");
 
-exports.getAll = async () => {
+exports.getAll = async (queryparams) => {
+  const Features = new APIFeatures(queryparams);
   try {
     const usersData = await User.findAll({
       include: { model: Location, as: "location" },
+      attributes: { ...Features.fieldLimit(), exclude: "Pincode" },
+      where: Features.filtering(),
+      order: Features.Sorting(),
+      limit: Features.pagination().limit,
+      offset: Features.pagination().skip,
     });
     return usersData;
   } catch (err) {
     console.log(err);
+    throw new Error(err.message);
   }
 };
 
@@ -24,6 +32,7 @@ exports.createUser = (data) => {
     return newUser;
   } catch (err) {
     console.log(err);
+    throw new Error(err.message);
   }
 };
 
@@ -36,6 +45,7 @@ const getUserbyId = (id) => {
     return user;
   } catch (err) {
     console.log(err);
+    throw new Error(err.message);
   }
 };
 
@@ -61,19 +71,16 @@ exports.updateUserData = async (body, id) => {
     // return user;
   } catch (err) {
     console.log(err);
+    throw new Error(err.message);
   }
 };
 
 exports.deleteUserData = (id) => {
   try {
     const user = User.destroy({ where: { user_Id: id } });
-    if (user) {
-      const updatedUser = getUserbyId(id);
-      console.log(updatedUser);
-
-      return updatedUser;
-    }
+    return user;
   } catch (err) {
     console.log(err);
+    throw new Error(err.message);
   }
 };
