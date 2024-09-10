@@ -18,13 +18,7 @@ exports.getAllUsers = async (req, res, next) => {
 // Create a user
 exports.createUser = async (req, res, next) => {
   try {
-    // let details = {
-    //   F_Name: req.body.fName,
-    //   L_Name: req.body.L_Name,
-    //   Gender: req.body.gender,
-    // };
-    // const user = await User.create(req.body);
-    const user = await UserServices.createUser(req.body);
+    const user = await UserServices.createRecord(req.body);
     console.log(user);
 
     res.status(200).send(user);
@@ -39,7 +33,7 @@ exports.getUserById = async (req, res, next) => {
   try {
     const id = req.params.id;
     // const user = await User.findOne({ where: { user_Id: id } });
-    const user = await UserServices.getbyId(id);
+    const user = await UserServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!user) {
       return next(new AppError(`No user with ${id} id`), 404);
@@ -53,14 +47,8 @@ exports.getUserById = async (req, res, next) => {
 };
 // update user
 exports.updateUser = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
-    const updatedUser = await UserServices.updateUserData(
+    const updatedUser = await UserServices.updateRecordData(
       req.body,
       req.params.id
     );
@@ -78,7 +66,7 @@ exports.updateUser = async (req, res, next) => {
 // delete user
 exports.deletedUser = async (req, res, next) => {
   try {
-    const user = await UserServices.deleteUserData(req.params.id);
+    const user = await UserServices.deleteRecordData(req.params.id);
     // console.log(updatedUser);
     if (!user) {
       return next(new AppError(`No user with ${req.params.id} id`), 404);

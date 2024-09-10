@@ -41,7 +41,7 @@ exports.getPaymentById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const payment = await PaymentServices.getbyId(id);
+    const payment = await PaymentServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!payment) {
       return next(new AppError(`No payment with ${id} id`), 404);
@@ -59,13 +59,7 @@ exports.getPaymentById = async (req, res, next) => {
 };
 // update user
 exports.updatepayment = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
     const updatedPayment = await PaymentServices.updateRecordData(
       req.body,
       req.params.id

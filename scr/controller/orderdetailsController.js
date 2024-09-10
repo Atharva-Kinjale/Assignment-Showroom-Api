@@ -4,7 +4,7 @@ const OrderServices = require("../Services/orderDetailsServices");
 exports.getAllOrders = async (req, res, next) => {
   try {
     // const users = await User.findAll();
-    const orders = await OrderServices.getAllOrders(req.query);
+    const orders = await OrderServices.getAll(req.query);
     // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
@@ -26,7 +26,7 @@ exports.createOrder = async (req, res, next) => {
     //   Gender: req.body.gender,
     // };
     // const user = await User.create(req.body);
-    const order = await OrderServices.createOrder(req.body);
+    const order = await OrderServices.createRecord(req.body);
 
     res.status(200).json({
       status: "success",
@@ -46,7 +46,7 @@ exports.getOrderById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const order = await OrderServices.getbyId(id);
+    const order = await OrderServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!order) {
       return next(new AppError(`No Order with ${id} id`), 404);
@@ -71,7 +71,7 @@ exports.updateOrder = async (req, res, next) => {
     //     returning: true,
     //   });
 
-    const updatedOrder = await OrderServices.updateOrderData(
+    const updatedOrder = await OrderServices.updateRecordData(
       req.body,
       req.params.id
     );
@@ -89,7 +89,7 @@ exports.updateOrder = async (req, res, next) => {
 // delete user
 exports.deleteOrder = async (req, res, next) => {
   try {
-    let order = await OrderServices.deleteOrderData(req.params.id);
+    let order = await OrderServices.deleteRecordData(req.params.id);
     if (!order) {
       return next(new AppError(`No Order with ${req.params.id} id`, 404));
     }

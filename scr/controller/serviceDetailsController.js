@@ -4,7 +4,7 @@ const ServiceDetailsServices = require("../Services/serviceDetailsServices");
 exports.getAllServices = async (req, res, next) => {
   try {
     // const users = await User.findAll();
-    const services = await ServiceDetailsServices.getAllServices(req.query);
+    const services = await ServiceDetailsServices.getAll(req.query);
     // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
@@ -26,7 +26,7 @@ exports.createService = async (req, res, next) => {
     //   Gender: req.body.gender,
     // };
     // const user = await User.create(req.body);
-    const service = await ServiceDetailsServices.createService(req.body);
+    const service = await ServiceDetailsServices.createRecord(req.body);
 
     res.status(200).json({
       status: "success",
@@ -46,7 +46,7 @@ exports.getServiceById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const service = await ServiceDetailsServices.getbyId(id);
+    const service = await ServiceDetailsServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!service) {
       return next(new AppError(`No Service with ${id} id`), 404);
@@ -64,14 +64,8 @@ exports.getServiceById = async (req, res, next) => {
 };
 // update user
 exports.updateService = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
-    const updatedService = await ServiceDetailsServices.updateServiceData(
+    const updatedService = await ServiceDetailsServices.updateRecordData(
       req.body,
       req.params.id
     );
@@ -91,7 +85,7 @@ exports.updateService = async (req, res, next) => {
 // delete user
 exports.deleteService = async (req, res, next) => {
   try {
-    let service = await ServiceDetailsServices.deleteServiceData(req.params.id);
+    let service = await ServiceDetailsServices.deleteRecordData(req.params.id);
     if (!service) {
       return next(new AppError(`No service with ${req.params.id} id`, 404));
     }

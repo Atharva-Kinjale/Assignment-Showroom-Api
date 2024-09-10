@@ -41,7 +41,7 @@ exports.getMappingById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const record = await carServiceMapServices.getbyId(id);
+    const record = await carServiceMapServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!record) {
       return next(new AppError(`No record with ${id} id`), 404);
@@ -61,11 +61,6 @@ exports.getMappingById = async (req, res, next) => {
 exports.updateMapping = async (req, res, next) => {
   // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
     const updatedMap = await carServiceMapServices.updateRecordData(
       req.body,
       req.params.id

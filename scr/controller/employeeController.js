@@ -18,7 +18,7 @@ exports.getAllEmployee = async (req, res, next) => {
 // Create a user
 exports.createEmployee = async (req, res, next) => {
   try {
-    const employee = await EmployeeServices.createEmp(req.body);
+    const employee = await EmployeeServices.createRecord(req.body);
     console.log(employee);
 
     res.status(200).json({
@@ -39,7 +39,7 @@ exports.getEmployeeById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const employee = await EmployeeServices.getbyId(id);
+    const employee = await EmployeeServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!employee) {
       return next(new AppError(`No employee with ${id} id`), 404);
@@ -60,12 +60,7 @@ exports.updateEmployee = async (req, res, next) => {
   // new User(...req.body);
   console.log(req.params);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
-    const updatedEmp = await EmployeeServices.updateEmployeeData(
+    const updatedEmp = await EmployeeServices.updateRecordData(
       req.body,
       req.params.id
     );
@@ -87,7 +82,7 @@ exports.deleteEmployee = async (req, res, next) => {
   console.log(req.params.id);
 
   try {
-    let employee = await EmployeeServices.deleteEmployeeData(req.params.id);
+    let employee = await EmployeeServices.deleteRecordData(req.params.id);
     if (!employee) {
       return next(new AppError(`No employee with ${req.params.id} id`, 404));
     }

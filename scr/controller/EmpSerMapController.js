@@ -3,9 +3,7 @@ const EmpServiceMapServices = require("../Services/EmpServicesMapServices");
 // find all users
 exports.getAllEmpSerMap = async (req, res, next) => {
   try {
-    // const users = await User.findAll();
     const records = await EmpServiceMapServices.getAll(req.query);
-    // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
       length: records.length,
@@ -13,7 +11,6 @@ exports.getAllEmpSerMap = async (req, res, next) => {
     });
   } catch (err) {
     next(new AppError(err.message, 404));
-    // res.status(404).json({ staus: " Failure", message: err });
   }
 };
 // Create a user
@@ -29,7 +26,6 @@ exports.createMapping = async (req, res, next) => {
       data: { EmpServicesMaps: createdMap },
     });
   } catch (err) {
-    // res.status(404).json({ staus: " Failure", message: err.message });
     console.log(err);
 
     next(new AppError(err.message, 404));
@@ -40,8 +36,7 @@ exports.getMappingById = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    // const user = await User.findOne({ where: { user_Id: id } });
-    const record = await EmpServiceMapServices.getbyId(id);
+    const record = await EmpServiceMapServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!record) {
       return next(new AppError(`No record with ${id} id`), 404);
@@ -59,13 +54,7 @@ exports.getMappingById = async (req, res, next) => {
 };
 // update user
 exports.updateMapping = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
     const updatedMap = await EmpServiceMapServices.updateRecordData(
       req.body,
       req.params.id

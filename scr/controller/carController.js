@@ -25,7 +25,7 @@ exports.createCar = async (req, res, next) => {
     //   Gender: req.body.gender,
     // };
     // const user = await User.create(req.body);
-    const car = await CarServices.createCarData(req.body);
+    const car = await CarServices.createRecord(req.body);
     console.log(car);
 
     res.status(200).json({
@@ -46,7 +46,7 @@ exports.getCarById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const car = await CarServices.getbyId(id);
+    const car = await CarServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!car) {
       return next(new AppError(`No Car with ${id} id`), 404);
@@ -64,14 +64,11 @@ exports.getCarById = async (req, res, next) => {
 };
 // update user
 exports.updateCar = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
-    const updatedCar = await CarServices.updateCarData(req.body, req.params.id);
+    const updatedCar = await CarServices.updateRecordData(
+      req.body,
+      req.params.id
+    );
     if (!updatedCar) {
       return next(new AppError(`No Car with ${req.params.id} id`, 404));
     }
@@ -86,7 +83,7 @@ exports.updateCar = async (req, res, next) => {
 // delete user
 exports.deletedCar = async (req, res, next) => {
   try {
-    let car = await CarServices.deleteCarData(req.params.id);
+    let car = await CarServices.deleteRecordData(req.params.id);
     if (!car) {
       return next(new AppError(`No Car with ${req.params.id} id`, 404));
     }

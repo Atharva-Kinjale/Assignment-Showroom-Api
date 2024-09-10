@@ -25,7 +25,7 @@ exports.createCustomer = async (req, res, next) => {
     //   Gender: req.body.gender,
     // };
     // const user = await User.create(req.body);
-    const customer = await CustomerServices.createCust(req.body);
+    const customer = await CustomerServices.createRecord(req.body);
     console.log(customer);
 
     res.status(200).json({
@@ -46,7 +46,7 @@ exports.getCustomerById = async (req, res, next) => {
     const id = req.params.id;
 
     // const user = await User.findOne({ where: { user_Id: id } });
-    const customer = await CustomerServices.getbyId(id);
+    const customer = await CustomerServices.getRecordById(id);
     // console.log(user.dataValues);
     if (!customer) {
       return next(new AppError(`No Customer with ${id} id`), 404);
@@ -66,12 +66,7 @@ exports.getCustomerById = async (req, res, next) => {
 exports.updateCustomer = async (req, res, next) => {
   // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
-    const updatedCustomer = await CustomerServices.updateCustomerData(
+    const updatedCustomer = await CustomerServices.updateRecordData(
       req.body,
       req.params.id
     );
@@ -91,7 +86,7 @@ exports.updateCustomer = async (req, res, next) => {
 // delete user
 exports.deletedCustomer = async (req, res, next) => {
   try {
-    let customer = await CustomerServices.deletecustomerData(req.params.id);
+    let customer = await CustomerServices.deleteRecordData(req.params.id);
     if (!customer) {
       return next(new AppError(`No Customer with ${req.params.id} id`, 404));
     }
