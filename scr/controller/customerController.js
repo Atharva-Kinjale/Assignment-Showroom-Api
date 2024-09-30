@@ -1,11 +1,9 @@
 const AppError = require("../../utils/appError");
 const CustomerServices = require("../Services/customerServices");
-// find all users
+// find all
 exports.getAllCustomers = async (req, res, next) => {
   try {
-    // const users = await User.findAll();
     const customers = await CustomerServices.getAll(req.query);
-    // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
       length: customers.length,
@@ -13,18 +11,11 @@ exports.getAllCustomers = async (req, res, next) => {
     });
   } catch (err) {
     next(new AppError(err.message, 404));
-    // res.status(404).json({ staus: " Failure", message: err });
   }
 };
-// Create a user
+// Create a
 exports.createCustomer = async (req, res, next) => {
   try {
-    // let details = {
-    //   F_Name: req.body.fName,
-    //   L_Name: req.body.L_Name,
-    //   Gender: req.body.gender,
-    // };
-    // const user = await User.create(req.body);
     const customer = await CustomerServices.createRecord(req.body);
     console.log(customer);
 
@@ -34,20 +25,18 @@ exports.createCustomer = async (req, res, next) => {
       data: { customers: customer },
     });
   } catch (err) {
-    // res.status(404).json({ staus: " Failure", message: err.message });
     console.log(err);
 
     next(new AppError(err.message, 404));
   }
 };
-// get user by id
+// get  by id
 exports.getCustomerById = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    // const user = await User.findOne({ where: { user_Id: id } });
     const customer = await CustomerServices.getRecordById(id);
-    // console.log(user.dataValues);
+
     if (!customer) {
       return next(new AppError(`No Customer with ${id} id`), 404);
     }
@@ -62,9 +51,8 @@ exports.getCustomerById = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// update user
+// update
 exports.updateCustomer = async (req, res, next) => {
-  // new User(...req.body);
   try {
     const updatedCustomer = await CustomerServices.updateRecordData(
       req.body,
@@ -83,16 +71,15 @@ exports.updateCustomer = async (req, res, next) => {
   }
 };
 
-// delete user
+// delete
 exports.deletedCustomer = async (req, res, next) => {
   try {
     let customer = await CustomerServices.deleteRecordData(req.params.id);
     if (!customer) {
       return next(new AppError(`No Customer with ${req.params.id} id`, 404));
     }
-    // console.log(updatedUser);
+
     res.status(204).json({ statusss: "Success", data: null });
-    // res.send("ghjkh");
   } catch (err) {
     console.log(err);
     next(new AppError(err.message, 500));

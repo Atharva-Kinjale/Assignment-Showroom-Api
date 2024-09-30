@@ -3,9 +3,7 @@ const CarServices = require("../Services/carServices");
 // find all users
 exports.getAllCars = async (req, res, next) => {
   try {
-    // const users = await User.findAll();
     const cars = await CarServices.getAll(req.query);
-    // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
       length: cars.length,
@@ -13,18 +11,11 @@ exports.getAllCars = async (req, res, next) => {
     });
   } catch (err) {
     next(new AppError(err.message, 404));
-    // res.status(404).json({ staus: " Failure", message: err });
   }
 };
-// Create a user
+// Create
 exports.createCar = async (req, res, next) => {
   try {
-    // let details = {
-    //   F_Name: req.body.fName,
-    //   L_Name: req.body.L_Name,
-    //   Gender: req.body.gender,
-    // };
-    // const user = await User.create(req.body);
     const car = await CarServices.createRecord(req.body);
     console.log(car);
 
@@ -40,14 +31,12 @@ exports.createCar = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// get user by id
+// get  by id
 exports.getCarById = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    // const user = await User.findOne({ where: { user_Id: id } });
     const car = await CarServices.getRecordById(id);
-    // console.log(user.dataValues);
     if (!car) {
       return next(new AppError(`No Car with ${id} id`), 404);
     }
@@ -62,7 +51,7 @@ exports.getCarById = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// update user
+// update
 exports.updateCar = async (req, res, next) => {
   try {
     const updatedCar = await CarServices.updateRecordData(
@@ -80,16 +69,15 @@ exports.updateCar = async (req, res, next) => {
   }
 };
 
-// delete user
+// delete
 exports.deletedCar = async (req, res, next) => {
   try {
     let car = await CarServices.deleteRecordData(req.params.id);
     if (!car) {
       return next(new AppError(`No Car with ${req.params.id} id`, 404));
     }
-    // console.log(updatedUser);
+
     res.status(204).json({ statusss: "Success", data: null });
-    // res.send("ghjkh");
   } catch (err) {
     console.log(err);
     next(new AppError(err.message, 500));

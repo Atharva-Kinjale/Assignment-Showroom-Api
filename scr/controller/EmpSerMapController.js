@@ -1,6 +1,6 @@
 const AppError = require("../../utils/appError");
 const EmpServiceMapServices = require("../Services/EmpServicesMapServices");
-// find all users
+// find all
 exports.getAllEmpSerMap = async (req, res, next) => {
   try {
     const records = await EmpServiceMapServices.getAll(req.query);
@@ -13,7 +13,7 @@ exports.getAllEmpSerMap = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// Create a user
+// Create a
 exports.createMapping = async (req, res, next) => {
   try {
     console.log(req.body);
@@ -31,13 +31,12 @@ exports.createMapping = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// get user by id
+// get  by id
 exports.getMappingById = async (req, res, next) => {
   try {
     const id = req.params.id;
 
     const record = await EmpServiceMapServices.getRecordById(id);
-    // console.log(user.dataValues);
     if (!record) {
       return next(new AppError(`No record with ${id} id`), 404);
     }
@@ -52,7 +51,7 @@ exports.getMappingById = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// update user
+// update
 exports.updateMapping = async (req, res, next) => {
   try {
     const updatedMap = await EmpServiceMapServices.updateRecordData(
@@ -62,7 +61,6 @@ exports.updateMapping = async (req, res, next) => {
     if (!updatedMap) {
       return next(new AppError(`No record with ${req.params.id} id`, 404));
     }
-    // console.log("req.params in updateC", req.body);
     res
       .status(200)
       .json({ status: "Success", data: { EmpServicesMap: updatedMap } });
@@ -72,14 +70,13 @@ exports.updateMapping = async (req, res, next) => {
   }
 };
 
-// delete user
+// delete
 exports.deleteMapping = async (req, res, next) => {
   try {
     let map = await EmpServiceMapServices.deleteRecordData(req.params.id);
     if (!map) {
       return next(new AppError(`No record with ${req.params.id} id`, 404));
     }
-    // console.log(updatedUser);
     res.status(204).json({ statusss: "Success", data: null });
     // res.send("ghjkh");
   } catch (err) {

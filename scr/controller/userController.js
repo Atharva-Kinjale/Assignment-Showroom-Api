@@ -6,7 +6,6 @@ exports.getAllUsers = async (req, res, next) => {
   try {
     // const users = await User.findAll();
     const users = await UserServices.getAll(req.query);
-    // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({ status: "success", data: { users: users } });
   } catch (err) {
     // res.status(404).json({ staus: " Failure", message: err });

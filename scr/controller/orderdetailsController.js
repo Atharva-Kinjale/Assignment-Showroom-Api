@@ -3,9 +3,7 @@ const OrderServices = require("../Services/orderDetailsServices");
 // find all users
 exports.getAllOrders = async (req, res, next) => {
   try {
-    // const users = await User.findAll();
     const orders = await OrderServices.getAll(req.query);
-    // Amitesh : create a re usable response and request function which will send all the status and message and data in response.
     res.status(200).json({
       status: "success",
       length: orders.length,
@@ -13,19 +11,12 @@ exports.getAllOrders = async (req, res, next) => {
     });
   } catch (err) {
     next(new AppError(err.message, 404));
-    // res.status(404).json({ staus: " Failure", message: err });
   }
 };
-// Create a user
+// Create a
 exports.createOrder = async (req, res, next) => {
   try {
     console.log(req.body);
-    // let details = {
-    //   F_Name: req.body.fName,
-    //   L_Name: req.body.L_Name,
-    //   Gender: req.body.gender,
-    // };
-    // const user = await User.create(req.body);
     const order = await OrderServices.createRecord(req.body);
 
     res.status(200).json({
@@ -40,14 +31,12 @@ exports.createOrder = async (req, res, next) => {
     next(new AppError(err.message, 404));
   }
 };
-// get user by id
+// get  by id
 exports.getOrderById = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    // const user = await User.findOne({ where: { user_Id: id } });
     const order = await OrderServices.getRecordById(id);
-    // console.log(user.dataValues);
     if (!order) {
       return next(new AppError(`No Order with ${id} id`), 404);
     }
@@ -64,13 +53,7 @@ exports.getOrderById = async (req, res, next) => {
 };
 // update user
 exports.updateOrder = async (req, res, next) => {
-  // new User(...req.body);
   try {
-    //   const updatedUser = await User.update(req.body, {
-    //     where: { user_Id: req.params.id },
-    //     returning: true,
-    //   });
-
     const updatedOrder = await OrderServices.updateRecordData(
       req.body,
       req.params.id
@@ -78,7 +61,6 @@ exports.updateOrder = async (req, res, next) => {
     if (!updatedOrder) {
       return next(new AppError(`No Order with ${req.params.id} id`, 404));
     }
-    // console.log("req.params in updateC", req.body);
     res.status(200).json({ status: "Success", data: { orders: updatedOrder } });
   } catch (err) {
     console.log(err);
@@ -86,16 +68,14 @@ exports.updateOrder = async (req, res, next) => {
   }
 };
 
-// delete user
+// delete
 exports.deleteOrder = async (req, res, next) => {
   try {
     let order = await OrderServices.deleteRecordData(req.params.id);
     if (!order) {
       return next(new AppError(`No Order with ${req.params.id} id`, 404));
     }
-    // console.log(updatedUser);
     res.status(204).json({ statusss: "Success", data: null });
-    // res.send("ghjkh");
   } catch (err) {
     console.log(err);
     next(new AppError(err.message, 500));
